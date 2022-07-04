@@ -12,7 +12,7 @@
 	and got the results like 
 
 	it was anydesk port so i did some Searchsploit and came up with
-![rick](https://github.com/fazilsubair/ctf-notes/blob/main/anne%20thm/rick.jpg)
+![rick](rick.jpg)
 
 		searchsploit anydesk 
 	the result was 
