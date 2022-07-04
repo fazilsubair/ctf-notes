@@ -12,7 +12,6 @@
 	and got the results like 
 
 	it was anydesk port so i did some Searchsploit and came up with
-![rick](rick.jpg)
 
 		searchsploit anydesk 
 	the result was 
