@@ -12,9 +12,10 @@
 	and got the results like 
 
 	it was anydesk port so i did some Searchsploit and came up with
+![rick](https://user-images.githubusercontent.com/75846386/177182960-2b1e1979-15a5-4113-bfc8-6d445933751a.jpg)
 
 		searchsploit anydesk 
-	the result was ![[rick.jpg]]
+	the result was 
 
 	and i use the one with the remote code execution
 
