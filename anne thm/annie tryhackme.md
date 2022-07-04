@@ -14,7 +14,7 @@
 	it was anydesk port so i did some Searchsploit and came up with
 
 		searchsploit anydesk 
-	the result was 
+	the result was ![[rick.jpg]]
 
 	and i use the one with the remote code execution
 
