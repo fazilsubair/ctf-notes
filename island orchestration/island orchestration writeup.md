@@ -180,6 +180,9 @@ its base64
 and the flag is 		
 
 	flag{08bed9fc0bc6d94fff9e51f291577841}
+<<<<<<< HEAD:Island Orchestration/Island Orchestration writeup.md
 	
 	
 #tryhackme #medium 
+=======
+>>>>>>> fdfbd9929f2f019dd5569f8c3740f8e06b493379:island orchestration/island orchestration writeup.md
