@@ -1,0 +1,6 @@
+$$\displaystyle\int_{i=0}^{\infty}20$$
+
+```mermaid
+graph LR
+    a[fazil]--assembles the word-->b[deepa]
+```
